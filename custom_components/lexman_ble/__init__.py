@@ -17,6 +17,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DEVICE_TIMEOUT, UPDATE_SECONDS
+from .models import LexmanCCTSmartBulbData
 from .typing import LexmanConfigEntry
 
 PLATFORMS: list[Platform] = [Platform.LIGHT]
