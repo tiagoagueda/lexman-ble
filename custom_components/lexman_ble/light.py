@@ -21,7 +21,7 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 
-from . import LexmanConfigEntry
+from .typing import LexmanConfigEntry
 
 
 async def async_setup_entry(

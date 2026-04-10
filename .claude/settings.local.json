@@ -3,7 +3,11 @@
     "allow": [
       "Bash(gh auth:*)",
       "Bash(gh api:*)",
-      "Bash(git remote:*)"
+      "Bash(git remote:*)",
+      "Bash(curl -s https://pypi.org/pypi/lexman-ble/json)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(list\\(d['releases'].keys\\(\\)\\)\\)\")",
+      "Bash(curl -s https://pypi.org/pypi/lexman-ble/0.1.2/json)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); reqs=d['info']['requires_dist']; print\\('\\\\n'.join\\(r for r in \\(reqs or []\\) if 'bluetooth' in r.lower\\(\\)\\)\\)\")"
     ]
   }
 }

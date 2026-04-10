@@ -13,6 +13,6 @@
   "homeassistant": "2025.1.0",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/tiagoagueda/lexman-ble/issues",
-  "requirements": ["bluetooth-data-tools>=1.20.0", "lexman-ble==0.1.1"],
+  "requirements": ["lexman-ble==0.1.2"],
   "version": "0.1.1"
 }

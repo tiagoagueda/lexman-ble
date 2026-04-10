@@ -17,13 +17,11 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DEVICE_TIMEOUT, UPDATE_SECONDS
-from .models import LexmanCCTSmartBulbData
+from .typing import LexmanConfigEntry
 
 PLATFORMS: list[Platform] = [Platform.LIGHT]
 
 _LOGGER = logging.getLogger(__name__)
-
-type LexmanConfigEntry = ConfigEntry[LexmanCCTSmartBulbData]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: LexmanConfigEntry) -> bool:
