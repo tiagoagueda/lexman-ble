@@ -16,15 +16,17 @@ from homeassistant.core import Event, HomeAssistant, callback
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DEVICE_TIMEOUT, DOMAIN, UPDATE_SECONDS
+from .const import DEVICE_TIMEOUT, UPDATE_SECONDS
 from .models import LexmanCCTSmartBulbData
 
 PLATFORMS: list[Platform] = [Platform.LIGHT]
 
 _LOGGER = logging.getLogger(__name__)
 
+type LexmanConfigEntry = ConfigEntry[LexmanCCTSmartBulbData]
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+
+async def async_setup_entry(hass: HomeAssistant, entry: LexmanConfigEntry) -> bool:
     """Set up LED BLE from a config entry."""
     address: str = entry.data[CONF_ADDRESS]
     ble_device = bluetooth.async_ble_device_from_address(hass, address.upper(), True)
@@ -89,9 +91,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     finally:
         cancel_first_update()
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = LexmanCCTSmartBulbData(
-        entry.title, smart_bulb, coordinator
-    )
+    entry.runtime_data = LexmanCCTSmartBulbData(entry.title, smart_bulb, coordinator)
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(_async_update_listener))
@@ -106,17 +106,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return True
 
 
-async def _async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
+async def _async_update_listener(hass: HomeAssistant, entry: LexmanConfigEntry) -> None:
     """Handle options update."""
-    data: LexmanCCTSmartBulbData = hass.data[DOMAIN][entry.entry_id]
-    if entry.title != data.title:
+    if entry.title != entry.runtime_data.title:
         await hass.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+async def async_unload_entry(hass: HomeAssistant, entry: LexmanConfigEntry) -> bool:
     """Unload a config entry."""
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
-        data: LexmanCCTSmartBulbData = hass.data[DOMAIN].pop(entry.entry_id)
-        await data.device.stop()
+        await entry.runtime_data.device.stop()
 
     return unload_ok

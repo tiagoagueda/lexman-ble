@@ -9,12 +9,9 @@ from lexman_ble import LexmanCCTSmartBulb
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,
     ATTR_COLOR_TEMP_KELVIN,
-    ATTR_FLASH,
     ColorMode,
     LightEntity,
-    LightEntityFeature,
 )
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.device_registry import DeviceInfo
@@ -24,17 +21,16 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 
-from .const import DOMAIN
-from .models import LexmanCCTSmartBulbData
+from . import LexmanConfigEntry
 
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    entry: ConfigEntry,
+    entry: LexmanConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the light platform for Lexman cct smart bulb."""
-    data: LexmanCCTSmartBulbData = hass.data[DOMAIN][entry.entry_id]
+    data = entry.runtime_data
     async_add_entities(
         [LexmanCCTSmartBulbEntity(data.coordinator, data.device, entry.title)]
     )
@@ -45,13 +41,10 @@ class LexmanCCTSmartBulbEntity(
 ):
     """Representation of Lexman CCT smart bulb device."""
 
-    _attr_supported_color_modes: set[ColorMode] | set[str] | None = {
-        ColorMode.COLOR_TEMP
-    }
-    _attr_color_mode: ColorMode | str | None = ColorMode.COLOR_TEMP
+    _attr_supported_color_modes: set[ColorMode] = {ColorMode.COLOR_TEMP}
+    _attr_color_mode: ColorMode = ColorMode.COLOR_TEMP
     _attr_has_entity_name: bool = True
     _attr_name: str | None = None
-    _attr_supported_features: LightEntityFeature = LightEntityFeature.FLASH
 
     def __init__(
         self,
@@ -90,11 +83,6 @@ class LexmanCCTSmartBulbEntity(
 
         if ATTR_COLOR_TEMP_KELVIN in kwargs:
             await self._device.set_temperature(kwargs[ATTR_COLOR_TEMP_KELVIN])
-            self._handle_coordinator_update()
-            return
-
-        if ATTR_FLASH in kwargs:
-            await self._device.ping()
             self._handle_coordinator_update()
             return
 
