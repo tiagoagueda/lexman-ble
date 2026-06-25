@@ -4,7 +4,8 @@
   "integration_type": "device",
   "bluetooth": [
     {
-      "local_name": "CCT smart bulb"
+      "manufacturer_id": 5393,
+      "service_uuid": "0000a100-1115-1000-0001-617573746f6d"
     }
   ],
   "codeowners": ["@tiagoagueda"],

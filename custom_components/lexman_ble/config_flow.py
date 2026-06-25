@@ -16,7 +16,7 @@ from homeassistant.components.bluetooth import (
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_ADDRESS
 
-from .const import DOMAIN, LOCAL_NAMES
+from .const import DOMAIN, SERVICE_UUID
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -84,9 +84,7 @@ class LexmanBleConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
                 if (
                     discovery.address in current_addresses
                     or discovery.address in self._discovered_devices
-                    or not any(
-                        discovery.name == local_name for local_name in LOCAL_NAMES
-                    )
+                    or SERVICE_UUID not in discovery.service_uuids
                 ):
                     continue
                 self._discovered_devices[discovery.address] = discovery
