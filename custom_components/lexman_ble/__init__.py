@@ -10,7 +10,6 @@ from lexman_ble import BLEAK_EXCEPTIONS, LexmanCCTSmartBulb
 
 from homeassistant.components import bluetooth
 from homeassistant.components.bluetooth.match import ADDRESS, BluetoothCallbackMatcher
-from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_ADDRESS, EVENT_HOMEASSISTANT_STOP, Platform
 from homeassistant.core import Event, HomeAssistant, callback
 from homeassistant.exceptions import ConfigEntryNotReady
@@ -26,12 +25,12 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: LexmanConfigEntry) -> bool:
-    """Set up LED BLE from a config entry."""
+    """Set up Lexman BLE from a config entry."""
     address: str = entry.data[CONF_ADDRESS]
     ble_device = bluetooth.async_ble_device_from_address(hass, address.upper(), True)
     if not ble_device:
         raise ConfigEntryNotReady(
-            f"Could not find LED BLE device with address {address}"
+            f"Could not find Lexman BLE device with address {address}"
         )
 
     smart_bulb = LexmanCCTSmartBulb(ble_device)

@@ -37,7 +37,6 @@ DISCONNECT_DELAY = 120
 RETRY_BACKOFF_EXCEPTIONS = (BleakDBusError,)
 
 _LOGGER = logging.getLogger(__name__)
-_LOGGER.setLevel(logging.DEBUG)
 
 DEFAULT_ATTEMPTS = 3
 

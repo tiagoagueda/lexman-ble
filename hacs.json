@@ -1,5 +1,4 @@
 {
   "name": "LexmanBLE",
-  "hacs": "0.1.0",
   "homeassistant": "2025.1.0"
 }

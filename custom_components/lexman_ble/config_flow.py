@@ -22,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class LexmanBleConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
-    """Handle a config flow for Access Bluetooth."""
+    """Handle a config flow for Lexman BLE."""
 
     VERSION = 1
 
@@ -59,16 +59,16 @@ class LexmanBleConfigFlow(ConfigFlow, domain=DOMAIN):  # type: ignore[call-arg]
                 discovery_info.address, raise_on_progress=False
             )
             self._abort_if_unique_id_configured()
-            led_ble = LexmanCCTSmartBulb(discovery_info.device)
+            device = LexmanCCTSmartBulb(discovery_info.device)
             try:
-                await led_ble.update()
+                await device.update()
             except BLEAK_EXCEPTIONS:
                 errors["base"] = "cannot_connect"
             except Exception:
                 _LOGGER.exception("Unexpected error")
                 errors["base"] = "unknown"
             else:
-                await led_ble.stop()
+                await device.stop()
                 return self.async_create_entry(
                     title=local_name,
                     data={
