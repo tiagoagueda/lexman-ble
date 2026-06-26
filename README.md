@@ -5,30 +5,16 @@
 [![License][license-shield]](LICENSE)
 
 [![pre-commit][pre-commit-shield]][pre-commit]
-[![Black][black-shield]][black]
-
 [![hacs][hacsbadge]][hacs]
 [![Project Maintenance][maintenance-shield]][user_profile]
-[![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
-[![Discord][discord-shield]][discord]
-[![Community Forum][forum-shield]][forum]
+Home Assistant custom integration for controlling [Lexman (Leroy Merlin brand) CCT smart bulbs](https://www.leroymerlin.fr/produits/decoration-eclairage/ampoule-et-led/ampoule-led/ampoule-e27/ampoule-led-connectee-e27-806lm-60w-variations-blanc-couleurs-lexman-enki-84372272.html) over Bluetooth.
 
-Python package and Home assistant custom component for controlling [Lexman (Leroy Merlin brand) CCT smart bulbs](https://www.leroymerlin.fr/produits/decoration-eclairage/ampoule-et-led/ampoule-led/ampoule-e27/ampoule-led-connectee-e27-806lm-60w-variations-blanc-couleurs-lexman-enki-84372272.html) over bluetooth.
+The integration is **self-contained**: the BLE device library is vendored under
+[`custom_components/lexman_ble/lexman_ble/`](custom_components/lexman_ble/lexman_ble/),
+so there is nothing to install from PyPI.
 
-Pip package installation:
-
-```shell
-pip install lexman-ble
-```
-
-Home assistant installation through [HACS](https://www.hacs.xyz/):
-
-HACS > Menu > Custom repositories > Paste `https://github.com/davidsmfreire/lexman-ble` and select Type "Integration"
-
-Then search for LexmanBLE and download.
-
-**The custom component will set up the following platforms.**
+**The custom component sets up the following platforms.**
 
 | Platform | Description          |
 | -------- | -------------------- |
@@ -36,48 +22,51 @@ Then search for LexmanBLE and download.
 
 ![logo][lexmanimg]
 
-## Home assistant manual custom_components installation
+## Installation
 
-1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
-2. If you do not have a `custom_components` directory (folder) there, you need to create it.
-3. In the `custom_components` directory (folder) create a new folder called `lexman_ble`.
-4. Download _all_ the files from the `custom_components/lexman_ble/` directory (folder) in this repository.
-5. Place the files you downloaded in the new directory (folder) you created.
-6. Restart Home Assistant
-7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "LexmanBLE"
+### HACS (recommended)
+
+1. In Home Assistant, open **HACS → ⋮ (top right) → Custom repositories**.
+2. Add the repository URL `https://github.com/tiagoagueda/lexman-ble` with type **Integration**.
+3. Search for **LexmanBLE**, download it, and restart Home Assistant.
+4. The bulbs are discovered automatically over Bluetooth. To add one manually, go to
+   **Settings → Devices & Services → + Add Integration → LexmanBLE**.
+
+### Manual
+
+1. Open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
+2. If you do not have a `custom_components` directory there, create it.
+3. Copy the `custom_components/lexman_ble/` directory from this repository (including the
+   nested `lexman_ble/` library folder) into your `custom_components` directory.
+4. Restart Home Assistant.
+5. Add the integration via **Settings → Devices & Services → + Add Integration → LexmanBLE**.
 
 ## Contributions are welcome!
 
-If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md)
+If you want to contribute to this please read the [Contribution guidelines](CONTRIBUTING.md).
 
 ## Credits
 
-This project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template.
+This is a fork of [@davidsmfreire](https://github.com/davidsmfreire)'s [lexman-ble](https://github.com/davidsmfreire/lexman-ble) project, with the BLE library vendored into the integration. Consider supporting the original author: [![BuyMeCoffee][buymecoffeebadge]][buymecoffee]
 
-Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [integration_blueprint][integration_blueprint] template
+The original project was generated from [@oncleben31](https://github.com/oncleben31)'s [Home Assistant Custom Component Cookiecutter](https://github.com/oncleben31/cookiecutter-homeassistant-custom-component) template, with code template mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [integration_blueprint][integration_blueprint] template.
 
-The lexman_ble library implementation was inspired in [@Bluetooth-Devices](https://github.com/Bluetooth-Devices)'s [led_ble](https://github.com/Bluetooth-Devices/led-ble) project.
+The lexman_ble library implementation was inspired by [@Bluetooth-Devices](https://github.com/Bluetooth-Devices)'s [led_ble](https://github.com/Bluetooth-Devices/led-ble) project.
 
 ---
 
 [integration_blueprint]: https://github.com/custom-components/integration_blueprint
-[black]: https://github.com/psf/black
-[black-shield]: https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge
 [buymecoffee]: https://www.buymeacoffee.com/davidsmfreire
 [buymecoffeebadge]: https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg?style=for-the-badge
-[commits-shield]: https://img.shields.io/github/commit-activity/y/davidsmfreire/lexman-ble.svg?style=for-the-badge
-[commits]: https://github.com/davidsmfreire/lexman-ble/commits/main
+[commits-shield]: https://img.shields.io/github/commit-activity/y/tiagoagueda/lexman-ble.svg?style=for-the-badge
+[commits]: https://github.com/tiagoagueda/lexman-ble/commits/main
 [hacs]: https://hacs.xyz
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge
-[discord]: https://discord.gg/Qa5fW2R
-[discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
 [lexmanimg]: images/logo.png
-[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
-[forum]: https://community.home-assistant.io/
-[license-shield]: https://img.shields.io/github/license/davidsmfreire/lexman-ble.svg?style=for-the-badge
-[maintenance-shield]: https://img.shields.io/badge/maintainer-%40davidsmfreire-blue.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/tiagoagueda/lexman-ble.svg?style=for-the-badge
+[maintenance-shield]: https://img.shields.io/badge/maintainer-%40tiagoagueda-blue.svg?style=for-the-badge
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [pre-commit-shield]: https://img.shields.io/badge/pre--commit-enabled-brightgreen?style=for-the-badge
-[releases-shield]: https://img.shields.io/github/release/davidsmfreire/lexman-ble.svg?style=for-the-badge
-[releases]: https://github.com/davidsmfreire/lexman-ble/releases
-[user_profile]: https://github.com/davidsmfreire
+[releases-shield]: https://img.shields.io/github/release/tiagoagueda/lexman-ble.svg?style=for-the-badge
+[releases]: https://github.com/tiagoagueda/lexman-ble/releases
+[user_profile]: https://github.com/tiagoagueda
