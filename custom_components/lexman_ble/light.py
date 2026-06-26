@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from lexman_ble import LexmanCCTSmartBulb
+from .lexman_ble import LexmanCCTSmartBulb
 
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,

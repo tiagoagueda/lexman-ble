@@ -2361,7 +2361,7 @@ wheels = [
 [[package]]
 name = "lexman-ble"
 version = "0.1.2"
-source = { editable = "." }
+source = { virtual = "." }
 dependencies = [
     { name = "bleak" },
     { name = "bleak-retry-connector", version = "4.5.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.14.2'" },

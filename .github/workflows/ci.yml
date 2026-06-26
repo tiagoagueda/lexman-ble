@@ -84,33 +84,7 @@ jobs:
   #       with:
   #         token: ${{ secrets.CODECOV_TOKEN }}
 
-  release:
-    runs-on: ubuntu-latest
-    environment: release
-    if: github.ref == 'refs/heads/main'
-    permissions:
-      id-token: write
-      contents: write
-    needs:
-      - lint
-      - commitlint
-      - hacs
-      - hassfest
-      # - test # TODO
-
-    steps:
-      - uses: actions/checkout@v4.2.2
-        with:
-          fetch-depth: 0
-
-      # Run semantic release:
-      # - Update CHANGELOG.md
-      # - Update version in code
-      # - Create git tag
-      # - Create GitHub release
-      # - Publish to PyPI
-      - name: Python Semantic Release
-        uses: python-semantic-release/python-semantic-release@v9.15.2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pypi_token: ${{ secrets.PYPI_TOKEN }}
+  # NOTE: The PyPI semantic-release job was removed. The BLE library is now
+  # vendored under custom_components/lexman_ble/lexman_ble and this fork is not
+  # published to PyPI. Bump custom_components/lexman_ble/manifest.json `version`
+  # by hand when you want HACS to offer an update.

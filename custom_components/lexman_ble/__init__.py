@@ -6,7 +6,7 @@ import asyncio
 from datetime import timedelta
 import logging
 
-from lexman_ble import BLEAK_EXCEPTIONS, LexmanCCTSmartBulb
+from .lexman_ble import BLEAK_EXCEPTIONS, LexmanCCTSmartBulb
 
 from homeassistant.components import bluetooth
 from homeassistant.components.bluetooth.match import ADDRESS, BluetoothCallbackMatcher

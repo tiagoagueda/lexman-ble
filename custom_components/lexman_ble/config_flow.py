@@ -6,7 +6,7 @@ import logging
 from typing import Any
 
 from bluetooth_data_tools import human_readable_name
-from lexman_ble import BLEAK_EXCEPTIONS, LexmanCCTSmartBulb
+from .lexman_ble import BLEAK_EXCEPTIONS, LexmanCCTSmartBulb
 import voluptuous as vol
 
 from homeassistant.components.bluetooth import (

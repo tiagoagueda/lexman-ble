@@ -39,7 +39,7 @@ def _hex_string_parsing(string: str, template: str) -> int:
             _cmp = int(result.fixed[i + len(fmt_indices)], 16)
             if _val != _cmp:
                 raise ValueError(
-                    f"Mismatch between same format placeholders: {i} {{{fmt_index}}}={_val} {{{i+len(fmt_indices)}}}={_cmp}"
+                    f"Mismatch between same format placeholders: {i} {{{fmt_index}}}={_val} {{{i + len(fmt_indices)}}}={_cmp}"
                 )
         value += _val << fmt_index * 8
     return value
